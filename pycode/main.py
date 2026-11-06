@@ -6,6 +6,17 @@ while True:
     if choice == "start":
         import world_data
         import time
+        import sys
+        def text_config(text, speed=0.04, line_pause=1.5):
+            # Above is default speed ^ and here is the ^ delay between lines
+            # This function was made by ai, but the rest is done by me
+            for letter in text:
+                sys.stdout.write(letter)
+                sys.stdout.flush()
+                if letter == "\n":
+                    time.sleep(line_pause)
+                else:
+                    time.sleep(speed)        
         key = False
         metal_door_unlocked = False
         print_delay = 3
@@ -16,60 +27,39 @@ while True:
         print("==================================================")
         time.sleep(3)
         while True:
-            print("Current room: ???")
-            time.sleep(1.5)
-            print("filler text \nYou look around you...")
-            time.sleep(print_delay)
-            print(world_data.rooms["start"]["desc"])
-            time.sleep(print_delay)
+            text_config(text=f"Current room: ???\nfiller text\nYou look around you...\n{world_data.rooms["start"]["desc"]}")
             while True:
-                choice = input(f"Where do you wish to go? \n Available paths: \n {world_data.rooms["start"]["paths"]}\n")
+                choice = input(text_config(text=f"\nWhere do you wish to go? \n Available paths: \n {world_data.rooms["start"]["paths"]}"))
                 if choice == "door":
-                    print("You walk up to the rusty door")
-                    time.sleep(2)
+                    text_config(text="\nYou walk up to the rusty door\n")
                     if key == True:
                         metal_door_unlocked = True
                         key = False
-                        print("You introduce the key... and it turns. \n (type door again)")
+                        text_config(text="You introduce the key... and it turns. \n (type door again)\n")
                     if metal_door_unlocked == True:
-                        print("filler")   
+                        text_config(text="filler\n")   
                     else:
-                        print("You twist the knob...")
-                        time.sleep(1)
-                        print("The door is locked. \nYou fell a little bit into desperation, knowing this door is the only exit")
+                        text_config(text="\nYou twist the knob...\nThe door is locked.\nYou fell a little bit into desperation,knowing this door is the only exit\n")
                         break
                 if choice == "bed":
-                    time.sleep(1)
-                    print("You walk up to the bed")
-                    time.sleep(3)
+                    text_config(text="\nYou walk up to the bed")
                     if key == False and metal_door_unlocked == False:
-                        print("As you neared the bed, you let out a yawn, already tired from what was happening")
-                        time.sleep(print_delay)
-                        print("You laid out in the bed, thinking about everything.")
-                        time.sleep(print_delay)
-                        print("For some reason, the room felt familiar, even though you've never seen this room before.")
-                        time.sleep(print_delay)
-                        print("You quickly fell asleep...")
-                        time.sleep(sleep_delay)
-                        print("filler")
+                        text_config(text="\nAs you neared the bed, you let out a yawn, already tired from what was happening\nYou laid out in the bed, thinking about everything.\nFor some reason, the room felt familiar, even though you've never seen this room before.\nfiller\n")
+                        text_config(text="You quickly fell asleep...\n", line_pause=5, speed=0.01)
                         key == True
-                        time.sleep(3)
                         break
                     elif key == True:
-                        print("Nothing else around here... \n (You already have the key!)")
-                        time.sleep(2)
+                        text_config(text="\nNothing else around here... \n(You already have the key!)\n")
                         break
                     elif key == False and metal_door_unlocked == True:
-                        print("Now's not a good time to rest... \n I should go see what's behind the door")
-                        time.sleep(2)
+                        text_config(text="\nNow's not a good time to rest... \n I should go see what's behind the door\n")
                         break
                     else:
                         print("bug warning")
                         break
 
                 else:
-                    print("That's not an option")
-                    time.sleep(1.5)
+                    text_config(text="That's not an option")
                     break
         
     elif choice == "stop":
